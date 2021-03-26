@@ -45,6 +45,7 @@ class Customer {
         [id],
     );
 
+
     const customer = results.rows[0];
 
     if (customer === undefined) {
@@ -54,6 +55,24 @@ class Customer {
     }
 
     return new Customer(customer);
+  }
+  //search for customers
+  static async search(query) {
+    const results = await db.query(
+    `SELECT id,
+            first_name AS "firstName",
+            last_name  AS "lastName"
+    FROM customers
+    WHERE first_name like '$1%'`,
+    [query],
+    );
+
+    return results.rows.map(c => new Customer(c));
+  }
+
+  //get full name
+  fullname() {
+    return `${this.firstName} ${this.lastName}`
   }
 
   /** get all reservations for this customer. */

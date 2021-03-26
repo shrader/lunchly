@@ -32,6 +32,21 @@
         <li class="nav-item">
           <a class="nav-link" href="/add/">Add a Customer</a>
         </li>
+        {% block searchbox %}
+        <li>
+          <form class="navbar-form navbar-right" action="/search">
+            <input
+            name="q"
+            class="form-control"
+            placeholder="Search Customers"
+            aria-label="Search"
+            id="search">
+            <button class="btn btn-default">
+              <span class="fa fa-search"></span>
+            </button>
+          </form>
+        </li>
+        {% endblock %}
       </ul>
     </div>
   </nav>

@@ -1,5 +1,6 @@
 "use strict";
 
+
 /** Routes for Lunchly */
 
 const express = require("express");
@@ -62,6 +63,45 @@ router.post("/:id/edit/", async function (req, res, next) {
 
   return res.redirect(`/${customer.id}/`);
 });
+
+/* 
+@app.route('/users')
+def list_users():
+    """Page with listing of users.
+
+    Can take a 'q' param in querystring to search by that username.
+    """
+
+    search = request.args.get('q')
+
+    if not search:
+        users = User.query.all()
+    else:
+        users = User.query.filter(User.username.like(f"%{search}%")).all()
+
+    return render_template('users/index.html', users=users)
+
+*/
+
+/** Handle searching for customers. */
+
+router.post("/search", async function (req, res, nect) {
+  let search = req.form.q;
+
+  console.log(req.body);
+  console.log(req.form);
+
+  if (!search) {
+    return res.redirect(`/`);
+  } else {
+    //make new route for search results
+    //make new model for wildcard search to find entries similar to what was searched
+    const searchResults = await Customer.search(req.body);
+
+    return 
+  }
+
+})
 
 /** Handle adding a new reservation. */
 
