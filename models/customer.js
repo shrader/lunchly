@@ -111,14 +111,26 @@ class Customer {
 
   static async getBestCustomers() {
     const result = await db.query(
-      `SELECT first_name, last_name, count(r.id) AS num_res
+      `SELECT customers.id, first_name, last_name, phone, customers.notes, count(r.id) AS num_res
       FROM customers
       JOIN reservations AS r ON r.customer_id = customers.id
-      GROUP BY first_name, last_name
+      GROUP BY customers.id, first_name, last_name, phone, customers.notes
       ORDER BY num_res DESC
       LIMIT 10`
     )
-    return result.rows;
+    //return result.rows;
+  
+    debugger;
+    let customerMap = result.rows.map(c => {
+      
+      c.firstName = c.first_name;
+      c.lastName = c.last_name
+      console.log(c);
+      return new Customer(c) 
+    
+    });
+    //console.log("customermap",customerMap);
+    return customerMap
     //return array of customers
     //add num_res as property
   }
