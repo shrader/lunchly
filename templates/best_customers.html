@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Best Customers{% endblock %}
+{% block content %}
+
+  <h1>Best Customers</h1>
+
+  <ul style="column-count: 4">
+    {% for customer in customers %}
+      <li>
+          {{ customer.first_name }}
+          {{ customer.last_name }}  
+          {{ customer.num_res }}  
+      </li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

@@ -33,6 +33,28 @@ router.post("/add/", async function (req, res, next) {
   return res.redirect(`/${customer.id}/`);
 });
 
+/** Handle searching for customers. */
+
+router.get("/search", async function (req, res, next) {
+  let searchName = req.query.q;
+
+  if (!searchName) {
+    return res.redirect(`/`);
+  } else {
+    //make new route for search results
+    //make new model for wildcard search to find entries similar to what was searched
+    const customers = await Customer.search(searchName);
+    return res.render("customer_search.html", {customers})
+  }
+});
+
+/* Shows the top 10 customers with most reservations. */
+router.get("/bestcustomers", async function(req, res, next) {
+  const customers = await Customer.getBestCustomers();
+  console.log(customers)
+
+  return res.render("best_customers.html", {customers});
+})
 /** Show a customer, given their ID. */
 
 router.get("/:id/", async function (req, res, next) {
@@ -83,25 +105,7 @@ def list_users():
 
 */
 
-/** Handle searching for customers. */
 
-router.post("/search", async function (req, res, nect) {
-  let search = req.form.q;
-
-  console.log(req.body);
-  console.log(req.form);
-
-  if (!search) {
-    return res.redirect(`/`);
-  } else {
-    //make new route for search results
-    //make new model for wildcard search to find entries similar to what was searched
-    const searchResults = await Customer.search(req.body);
-
-    return 
-  }
-
-})
 
 /** Handle adding a new reservation. */
 

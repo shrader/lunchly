@@ -63,10 +63,9 @@ class Customer {
             first_name AS "firstName",
             last_name  AS "lastName"
     FROM customers
-    WHERE first_name like '$1%'`,
-    [query],
+    WHERE lower(first_name) LIKE $1`,
+    [query.toLowerCase() + '%'],
     );
-
     return results.rows.map(c => new Customer(c));
   }
 
@@ -108,6 +107,18 @@ class Customer {
           ],
       );
     }
+  }
+
+  static async getBestCustomers() {
+    const result = await db.query(
+      `SELECT first_name, last_name, count(r.id) AS num_res
+      FROM customers
+      JOIN reservations AS r ON r.customer_id = customers.id
+      GROUP BY first_name, last_name
+      ORDER BY num_res DESC
+      LIMIT 10`
+    )
+    return result.rows;
   }
 }
 

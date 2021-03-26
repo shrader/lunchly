@@ -19,5 +19,14 @@
     "jest": "^26.2.2",
     "supertest": "^4.0.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shrader/lunchly.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/shrader/lunchly/issues"
+  },
+  "homepage": "https://github.com/shrader/lunchly#readme",
   "description": ""
 }
