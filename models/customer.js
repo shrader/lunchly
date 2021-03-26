@@ -64,7 +64,7 @@ class Customer {
             last_name  AS "lastName"
     FROM customers
     WHERE lower(first_name) LIKE $1`,
-    [query.toLowerCase() + '%'],
+    ['%' + query.toLowerCase() + '%'],
     );
     return results.rows.map(c => new Customer(c));
   }
@@ -119,6 +119,8 @@ class Customer {
       LIMIT 10`
     )
     return result.rows;
+    //return array of customers
+    //add num_res as property
   }
 }
 
